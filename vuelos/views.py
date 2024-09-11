@@ -24,11 +24,12 @@ def listar_vuelos(request):
     return render(request, 'vuelos/listar_vuelos.html', {'vuelos': vuelos})
 
 def estadisticas_vuelos(request):
-    vuelos_nacionales = Flight.objects.filter(type='Nacional').count()
-    vuelos_internacionales = Flight.objects.filter(type='Internacional').count()
-    promedio_precio_nacional = Flight.objects.filter(type='Nacional').aggregate(Avg('price'))['price__avg'] or 0
+    num_nacionales = Flight.objects.filter(type='Nacional').count()
+    num_internacionales = Flight.objects.filter(type='Internacional').count()
+    avg_price_nacional = Flight.objects.filter(type='Nacional').aggregate(Avg('price'))['price__avg'] or 0
+
     return render(request, 'vuelos/estadisticas_vuelos.html', {
-        'vuelos_nacionales': vuelos_nacionales,
-        'vuelos_internacionales': vuelos_internacionales,
-        'promedio_precio_nacional': promedio_precio_nacional
+        'num_nacionales': num_nacionales,
+        'num_internacionales': num_internacionales,
+        'avg_price_nacional': avg_price_nacional,
     })
